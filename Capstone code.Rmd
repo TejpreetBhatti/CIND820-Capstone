@@ -1,0 +1,129 @@
+---
+title: "CIND 820 Capstone"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+<center> <h1> Capstone (10%) </h1> </center>
+<center>  <h3> Tejpreet Bhatti </h2> </center>
+<center> <h3> DM0 & 500822071 </h2> </center>
+---
+
+```{r}
+library(ggplot2)
+library(RColorBrewer)
+library(gridExtra)
+library(corrplot)
+library(arules)
+library(arulesViz)
+library(dplyr)
+library(caret)
+library(dplyr)
+library(ggraph)
+library(igraph)
+require(tidyverse)
+library(cluster)
+library(purrr)
+library(rpart)
+```
+
+
+#### 1. Read the csv files in the folder. (4 points)
+```{r}
+mydata<-read.csv("C:\\Users\\tejpr\\Downloads\\WA_Fn-UseC_-Marketing-Customer-Value-Analysis.csv")
+
+head(mydata)
+```
+```{r}
+str(mydata)
+```
+```{r}
+hist(mydata$Customer.Lifetime.Value, main = "Histogram of Customer Lifetime Value", xlab = "Customer Lifetime Value (Dollars)",
+    cex.main = 2, cex.lab = 1.5)
+```
+
+```{r}
+hist(mydata$Income, main = "Histogram of Customer Lifetime Value", xlab = "Income (Dollars)",
+    cex.main = 2, cex.lab = 1.5)
+```
+
+```{r}
+hist(mydata$Monthly.Premium.Auto, main = "Histogram of Monthly Premium", xlab = "Monthly Premium (Dollars)",
+    cex.main = 2, cex.lab = 1.5)
+```
+
+```{r}
+hist(mydata$Total.Claim.Amount, main = "Histogram of Total Claim Amount", xlab = "Total Claim Amount (Dollars)",
+    cex.main = 2, cex.lab = 1.5)
+```
+
+
+```{r}
+CLV_PolicyType <- ggplot(mydata, aes(x=Policy.Type, y=Customer.Lifetime.Value, fill = Policy ))+
+        geom_col() + xlab("Policy Type") + ylab("Customer Lifetime Value") +
+        ggtitle("Customer Lifetime Value by Policy Type and Policy") +
+         scale_fill_brewer(palette = "Set1") 
+CLV_PolicyType
+```
+
+```{r}
+CLV_Vehicle <- ggplot(mydata, aes(x=Vehicle.Size, y=Customer.Lifetime.Value, 
+              fill = Vehicle.Class ))+geom_col() + 
+        xlab("Vehicle Type") + ylab("Customer Lifetime Value") + 
+        ggtitle("CLV by Vehicle Type and Vehicle Class") +
+        scale_fill_brewer(palette = "Dark2") 
+        
+CLV_Vehicle
+```
+
+```{r}
+CLV_Region <- ggplot(mydata, aes(x=State, y=Customer.Lifetime.Value, 
+              fill = Location.Code ))+geom_col() + 
+        xlab("State") + ylab("Customer Lifetime Value") +
+        ggtitle("CLV by State and Location Code") +
+        scale_fill_brewer(palette = "Set1")
+        
+CLV_Region
+```
+
+```{r}
+CLV_Marital <- ggplot(mydata, aes(x=Marital.Status, y=Customer.Lifetime.Value, 
+              fill = Gender ))+geom_col() + 
+        xlab("Marital Status") + ylab("Customer Lifetime Value") +
+        ggtitle("CLV by Marital Status and Gender") +
+        scale_fill_brewer(palette = "Set1") 
+        
+CLV_Marital
+```
+
+```{r}
+CLV_Education <- ggplot(mydata, aes(x=Education, y=Customer.Lifetime.Value, 
+              fill = Education ))+geom_col() + 
+        xlab("Education") + ylab("Customer Lifetime Value") +
+        ggtitle("CLV by Education") +
+        scale_fill_brewer(palette = "Set1") 
+        
+CLV_Education
+```
+
+```{r}
+CLV_Sales <- ggplot(mydata, aes(x=Sales.Channel, y=Customer.Lifetime.Value, 
+              fill = Sales.Channel ))+geom_col() + 
+        xlab("Sales Channel") + ylab("Customer Lifetime Value") +
+        ggtitle("CLV by Sales Channel") +
+        scale_fill_brewer(palette = "Set1") 
+        
+CLV_Sales
+```
+
+
+```{r}
+autoCorr <- mydata[,c(3,10,13:17,22)]
+colnames(autoCorr) <- c("CLV", "Income", "Mon. Premium", "Mon Since Claim", "Mons Since Inception",
+                        "Open Complaints", "Num of Poicies", "Total Claim Amt.")
+autoCorr <- cor(autoCorr)
+# Plot the correlation table
+corrplot(autoCorr, method = "color", order = "hclust")
+```
+
