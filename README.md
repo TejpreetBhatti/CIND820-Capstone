@@ -92,7 +92,9 @@ R: (rapportools), (tidyverse), (ggplot2), (RColorBrewer), (gridExtra), (corrplot
 
 # Repository Content
 
--
+-Both capastone code.rmd and capstonepythoncode.ipynb is code for exploratory data analytics and descriptive statictics 
+
+-CIND 820 Initial Code.rmd is code for data prep, data modeling and intial results 
 
 # Datasets
 
