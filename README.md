@@ -26,9 +26,17 @@ This repository contains the code required to evaluate the impact of Customer Li
 
 -Abstract
 
--Requirements
+-Problem statement
 
--Data Preparation
+-Data 
+
+-Techniques and Tools
+
+-Evaluation Metrics
+
+-Repository Content
+
+-Dataset
 
 -Methodology
 
@@ -81,6 +89,10 @@ Required packages are as follows:
 Python: Pandas, Numpy, OS, Matplotlib.pyplot, Seaborn, Stasmodel.api, Scipy.stats
 R: (rapportools), (tidyverse), (ggplot2), (RColorBrewer), (gridExtra), (corrplot), (corrgram), (arules), (arulesViz), (dplyr), (caret), (dplyr), (ggraph), (igraph), (factoextra), (purrr), (rpart) and (rattle)
 
+
+# Repository Content
+
+-
 
 # Datasets
 
