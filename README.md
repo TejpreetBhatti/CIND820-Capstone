@@ -23,26 +23,35 @@ Conclusion
 
 
 Abstract
+
 The core business of insurance companies is to protect people and businesses from extreme losses. Furthermore, insurance is an intangible good, that requires advance payment before it's used by the way of monthly payments. Over the past 20 years, insurance companies and companies from most all sectors have looked for ways to improve their customer portfolio by locating, attracting, and retaining the most profitable. For this to happen, companies needed to classify their customer into segments for current and future value. To measure high valued clients, most companies have adopted Customer lifetime value (CLV). The definition of CLV is the amount of money a customer will spend with a business in his/her lifetime.
 The insurance industry is an extremely complex business because customer lifetime value and retention are always of the highest priority. The longer a customer stays with one company the higher the profits the company can reap. To analyze these phenomena, the IBM Watson dataset was collected to predict; what traits and behaviour do the most profitable customers exhibit. For an insurance company, the goal is to find and keep high-value customers that will provide the company profits for as long as possible.
 This study aims to discover customers that provide the highest Customer Lifetime Value and factors that lead to a high-value customer. Specifically, it will help discover behaviour and characteristics of “what variables lead to a customer becoming high value to a company? what constitutes a high-value customer? what customer segments are the most profitable?” based on twenty-four demographic and industry-related variables. The “Customer Lifetime Value” column a raw dollar amounts, which means it is a regression problem. But for further analysis, those dollar amounts will be binned into low, medium, and high, which means this data could also be analyzed from a classification problem perspective.
 
+
 Problem Statement
+
 The initial research question for this study is as follows:
 What variables lead to a customer becoming high value to a company?
 Additionally, this study will be exploring the use of machine learning for prediction within the domain of CLV in the insurance. Thus, this study has an addition research question as follows:
 Through utilization of machine learning techniques, what constitutes a high-value customer? What customer segments are the most profitable?
 
+
 Data
+
 The dataset used to solve the problem stated above comes from Kaggle; the name of the data set is IBM Watson Marketing Customer Value Data. The dataset has both categorical and integer/numeric attributes. The dataset has 9134 instances or rows. The dataset also does not have any missing values. This dataset also falls into the supervised learning category as it is predicting continuous and classified values. The dataset is biased because 85% of the customers are not engaged.
 
+
 Techniques and Tools
+
 Python will be used across the lifecycle of this study. Three approaches will be adopted:
 Decision Trees – will be used for model building and prediction. Chosen for its visualization ability,  comprehensive predictions and works great with multiclass problems.
 KNN- will be used for model building and prediction. Chosen due to it can learn non-linear decision boundaries and it has a single hyperparameter the value of K.
 Naïve Bayes – will be used for model building and prediction. Chosen due it works continuous and discrete data, very scalable number of predictors and data points and works great with multiclass problems
 
+
 Evaluation
+
 Model evaluation metrics will be:
 Accuracy, Precision, Specificity, Confusion Matrix , F1 score and runtime will be calculated
 Requirements
@@ -51,9 +60,12 @@ Required packages are as follows:
 Python: Pandas, Numpy, OS, Matplotlib.pyplot, Seaborn, Stasmodel.api, Scipy.stats
 R: (rapportools), (tidyverse), (ggplot2), (RColorBrewer), (gridExtra), (corrplot), (corrgram), (arules), (arulesViz), (dplyr), (caret), (dplyr), (ggraph), (igraph), (factoextra), (purrr), (rpart) and (rattle)
 
+
 Datasets
+
 IBM Watson Marketing Customer Value Data: https://www.kaggle.com/datasets/pankajjsh06/ibm-watson-marketing-customer-value-data 
 The following variables are found in the dataset above:
+
 Policy Profile Variables
 •	Customer: Customer ID number
 •	Customer Lifetime Value: Customer's total worth to business over life of the relationship
@@ -88,6 +100,7 @@ Customer Profile Variables
 
 
 Methodology
+
 The study methodology was as follows:
 
 Step	Description
@@ -107,6 +120,7 @@ INTERPRET & COMMUNICATE:	Interpret results against evaluation metrics and presen
 
 
 Initial Results
+
 The following 3 models were built and evaluated: • Decision Trees • KNN • Naïve Bayes
 Summary performance measures for each model is as follows:
 
