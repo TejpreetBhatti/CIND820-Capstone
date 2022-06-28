@@ -15,41 +15,41 @@ Dr. Sedef Akinli Kocak
 
 
 
-Repository Contents
+# Repository Contents
 
 This repository contains the code required to evaluate the impact of Customer Lifetime Value measures on the insurance industry within the United States utilizing a Decision Tree Model, a KNN Model, and a Naïve Bayes Model.
 
 
 
 
-Table of Contents
+# Table of Contents
 
-Abstract
+-Abstract
 
-Requirements
+-Requirements
 
-Data Preparation
+-Data Preparation
 
-Methodology
+-Methodology
 
-Initial Results
+-Initial Results
 
-Results 
+-Results 
 
-Conclusion 
-
-
+-Conclusion 
 
 
 
-Abstract
+
+
+# Abstract
 
 The core business of insurance companies is to protect people and businesses from extreme losses. Furthermore, insurance is an intangible good, that requires advance payment before it's used by the way of monthly payments. Over the past 20 years, insurance companies and companies from most all sectors have looked for ways to improve their customer portfolio by locating, attracting, and retaining the most profitable. For this to happen, companies needed to classify their customer into segments for current and future value. To measure high valued clients, most companies have adopted Customer lifetime value (CLV). The definition of CLV is the amount of money a customer will spend with a business in his/her lifetime.
 The insurance industry is an extremely complex business because customer lifetime value and retention are always of the highest priority. The longer a customer stays with one company the higher the profits the company can reap. To analyze these phenomena, the IBM Watson dataset was collected to predict; what traits and behaviour do the most profitable customers exhibit. For an insurance company, the goal is to find and keep high-value customers that will provide the company profits for as long as possible.
 This study aims to discover customers that provide the highest Customer Lifetime Value and factors that lead to a high-value customer. Specifically, it will help discover behaviour and characteristics of “what variables lead to a customer becoming high value to a company? what constitutes a high-value customer? what customer segments are the most profitable?” based on twenty-four demographic and industry-related variables. The “Customer Lifetime Value” column a raw dollar amounts, which means it is a regression problem. But for further analysis, those dollar amounts will be binned into low, medium, and high, which means this data could also be analyzed from a classification problem perspective.
 
 
-Problem Statement
+# Problem Statement
 
 The initial research question for this study is as follows:
 What variables lead to a customer becoming high value to a company?
@@ -57,12 +57,12 @@ Additionally, this study will be exploring the use of machine learning for predi
 Through utilization of machine learning techniques, what constitutes a high-value customer? What customer segments are the most profitable?
 
 
-Data
+# Data
 
 The dataset used to solve the problem stated above comes from Kaggle; the name of the data set is IBM Watson Marketing Customer Value Data. The dataset has both categorical and integer/numeric attributes. The dataset has 9134 instances or rows. The dataset also does not have any missing values. This dataset also falls into the supervised learning category as it is predicting continuous and classified values. The dataset is biased because 85% of the customers are not engaged.
 
 
-Techniques and Tools
+# Techniques and Tools
 
 Python will be used across the lifecycle of this study. Three approaches will be adopted:
 Decision Trees – will be used for model building and prediction. Chosen for its visualization ability,  comprehensive predictions and works great with multiclass problems.
@@ -70,7 +70,7 @@ KNN- will be used for model building and prediction. Chosen due to it can learn 
 Naïve Bayes – will be used for model building and prediction. Chosen due it works continuous and discrete data, very scalable number of predictors and data points and works great with multiclass problems
 
 
-Evaluation
+# Evaluation
 
 Model evaluation metrics will be:
 
@@ -82,13 +82,13 @@ Python: Pandas, Numpy, OS, Matplotlib.pyplot, Seaborn, Stasmodel.api, Scipy.stat
 R: (rapportools), (tidyverse), (ggplot2), (RColorBrewer), (gridExtra), (corrplot), (corrgram), (arules), (arulesViz), (dplyr), (caret), (dplyr), (ggraph), (igraph), (factoextra), (purrr), (rpart) and (rattle)
 
 
-Datasets
+# Datasets
 
 IBM Watson Marketing Customer Value Data: https://www.kaggle.com/datasets/pankajjsh06/ibm-watson-marketing-customer-value-data 
 
 The following variables are found in the dataset above:
 
-Policy Profile Variables
+## Policy Profile Variables
 •	Customer: Customer ID number
 •	Customer Lifetime Value: Customer's total worth to business over life of the relationship
 •	Response: Yes or No response to a renewal offer
@@ -105,7 +105,7 @@ Policy Profile Variables
 •	Total Claim Amount: Cummulative amount of claims since policy inception
 
 
-Customer Profile Variables
+## Customer Profile Variables
 •	State: State of residence or business
 •	Education: Level of education (High School or less, College, BA, MA , PHD)
 •	Effective To Date: Date the policy expires
@@ -121,7 +121,7 @@ Customer Profile Variables
 
 
 
-Methodology
+# Methodology
 
 The study methodology was as follows:
 
@@ -142,32 +142,28 @@ INTERPRET & COMMUNICATE:	Interpret results against evaluation metrics and presen
 
 
 
-Initial Results
+# Initial Results
 
 The following 3 models were built and evaluated: • Decision Trees • KNN • Naïve Bayes
 
 Summary performance measures for each model is as follows:
 
 
-Model	                  Decision Tree	      KNN	          Naïve Bayes
-Accuracy	                  0.94	         0.62	            1
-
-Recall(Sensitivity) 	    Low- 0.97        Low- 0.67       Low- 1
-                          AVG- 0.90        AVG- 0.59       AVG- 1
-                          High- 0.94	     High- 0.60      High- 1
-
-Precision	                Low- 0.98        Low- 0.63       Low- 1
-                          AVG- 0.89        AVG- 0.65       AVG- 1
-                          High- 0.93	     High- 0.58      High- 1
-	
-F1-score	               Low- 0.98         Low- 0.65       Low- 1
-                         AVG- 0.89         AVG- 0.62       AVG- 1
-                         High- 0.93	       High- 0.59      High- 1
-
-Specificity 	           Low- 0.99        Low- 0.76        Low- 1
-                         AVG- 0.95        AVG- 0.87        AVG- 1
-                         High- 0.97	      High- 0.80       High- 1
-	
-Training time	             8.46s	         0.21s	         1.24min
-Prediction time	           0.15s	         2.2s	           12.31s
+Model	                 | Decision Tree	 |     KNN	     |     Naïve Bayes |
+-------------------------|-----------------------|-------------------|---------------- |
+Accuracy	         |         0.94	         |     0.62	     |       1         |                                                  
+Recall(Sensitivity) -Low |         0.97          |     0.67          |       1         |
+Recall(Sensitivity) -Avg |         0.90          |     0.59          |       1         |
+Recall(Sensitivity) -High|         0.94	         |     0.60          |       1         |                         
+Precision - Low	         |         0.98          |     0.63          |       1         |
+Precision - Avg          |         0.89          |     0.65          |       1         |
+Precision - High         |         0.93	         |     0.58          |       1         |	                
+F1-score - Low 	         |         0.98          |     0.65          |       1         |
+F1-score - Avg 	         |         0.89          |     0.62          |       1         |
+F1-score - High 	 |         0.93          |     0.59          |       1         |                       
+Specificity - Low 	 |         0.99          |     0.76          |       1         |
+Specificity - Avg        |         0.95          |     0.87          |       1         |
+Specificity - High       |         0.97	         |     0.80          |       1         |	                
+Training time	         |         8.46s         |    0.21s	     |      1.24min    |
+Prediction time	         |         0.15s	 |    2.2s	     |      12.31s     |
 
