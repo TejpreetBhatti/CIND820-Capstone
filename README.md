@@ -1,23 +1,36 @@
 # CIND820-Capstone
 [CIND 820 Readme.docx](https://github.com/TejpreetBhatti/CIND820-Capstone/files/9003497/CIND.820.Readme.docx)
 
+
 A Data-Driven Approach to find the Most Profitable and Engaged Customers for Insurance firms
 
+
 Author: Tejpreet Bhatti
+
 CIND820: Big Data Analytics Project
+
 Dr. Sedef Akinli Kocak
 
+
 Repository Contents
+
 This repository contains the code required to evaluate the impact of Customer Lifetime Value measures on the insurance industry within the United States utilizing a Decision Tree Model, a KNN Model, and a Naïve Bayes Model.
 
 
 Table of Contents
+
 Abstract
+
 Requirements
+
 Data Preparation
+
 Methodology
+
 Initial Results
+
 Results 
+
 Conclusion 
 
 
@@ -53,6 +66,7 @@ Naïve Bayes – will be used for model building and prediction. Chosen due it w
 Evaluation
 
 Model evaluation metrics will be:
+
 Accuracy, Precision, Specificity, Confusion Matrix , F1 score and runtime will be calculated
 Requirements
 Python and R
@@ -64,6 +78,7 @@ R: (rapportools), (tidyverse), (ggplot2), (RColorBrewer), (gridExtra), (corrplot
 Datasets
 
 IBM Watson Marketing Customer Value Data: https://www.kaggle.com/datasets/pankajjsh06/ibm-watson-marketing-customer-value-data 
+
 The following variables are found in the dataset above:
 
 Policy Profile Variables
@@ -104,6 +119,7 @@ Methodology
 The study methodology was as follows:
 
 Step	Description
+
 PROBLEM AND OBJECTIVE DEFINITION: Identify business context, define problem and related objectives.
 
 DATA COLLECTION: Dataset was gathered, merged and organized in similar time periods by IBM Watson. 
@@ -122,7 +138,9 @@ INTERPRET & COMMUNICATE:	Interpret results against evaluation metrics and presen
 Initial Results
 
 The following 3 models were built and evaluated: • Decision Trees • KNN • Naïve Bayes
+
 Summary performance measures for each model is as follows:
+
 
 Model	                  Decision Tree	      KNN	          Naïve Bayes
 Accuracy	                  0.94	         0.62	            1
