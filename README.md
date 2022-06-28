@@ -5,6 +5,7 @@
 A Data-Driven Approach to find the Most Profitable and Engaged Customers for Insurance firms
 
 
+
 Author: Tejpreet Bhatti
 
 CIND820: Big Data Analytics Project
@@ -12,9 +13,13 @@ CIND820: Big Data Analytics Project
 Dr. Sedef Akinli Kocak
 
 
+
+
 Repository Contents
 
 This repository contains the code required to evaluate the impact of Customer Lifetime Value measures on the insurance industry within the United States utilizing a Decision Tree Model, a KNN Model, and a Naïve Bayes Model.
+
+
 
 
 Table of Contents
@@ -32,6 +37,8 @@ Initial Results
 Results 
 
 Conclusion 
+
+
 
 
 
