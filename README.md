@@ -76,6 +76,8 @@ Python will be used across the lifecycle of this study. Three approaches will be
 Decision Trees – will be used for model building and prediction. Chosen for its visualization ability,  comprehensive predictions and works great with multiclass problems.
 KNN- will be used for model building and prediction. Chosen due to it can learn non-linear decision boundaries and it has a single hyperparameter the value of K.
 Naïve Bayes – will be used for model building and prediction. Chosen due it works continuous and discrete data, very scalable number of predictors and data points and works great with multiclass problems
+Randon Forest - will be used for model building and prediction. Chosen for its similarity to decision trees. Hence can compare the results with decision trees
+Multinomial Logistic Regression - will be used for model building and prediction. Chosen for its ability to perform multiclass logistic regression 
 
 
 # Evaluation
@@ -148,7 +150,7 @@ DATA PREP & PREPROCESSING 	Data cleaning (duplication elimination, missing value
 
 DATA EXPLORATION: Descriptive statistics, univariate analysis, bivariate analysis data visualization (generate graphs and charts). Purpose to find trends, patterns and correlations
 
-DATA MODELING: Split model into training and testing sets, conduct predictive analysis. Perform Decision tree, KNN and Naïve Bayes algorithms. Perform 10-fold cross-validation.
+DATA MODELING: Split model into training and testing sets, conduct predictive analysis. Perform Decision tree, KNN, Random Forest, Multinomial Logistic Regression and Naïve Bayes algorithms. Perform 10-fold cross-validation.
 
 MODEL EVALUATION: Present results for all models including all evaluation metrics. Accuracy, Precision, Specificity, Confusion Matrix, F1 score and runtime will be calculated.
 
