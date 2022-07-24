@@ -17,7 +17,7 @@ Dr. Sedef Akinli Kocak
 
 # Repository Contents
 
-This repository contains the code required to evaluate the impact of Customer Lifetime Value measures on the insurance industry within the United States utilizing a Decision Tree Model, a KNN Model, and a Naïve Bayes Model.
+This repository contains the code required to evaluate the impact of Customer Lifetime Value measures on the insurance industry within the United States utilizing a Decision Tree Model, a KNN Model, Random Forest, Multinomial Logistic Regression and a Naïve Bayes Model.
 
 
 
@@ -166,6 +166,31 @@ Summary performance measures for each model is as follows:
 
 
 Model	                 | Decision Tree	 |     KNN	     |     Naïve Bayes |
+-------------------------|-----------------------|-------------------|---------------- |
+Accuracy	         |         0.94	         |     0.62	     |       1         |                                                  
+Recall(Sensitivity) -Low |         0.97          |     0.67          |       1         |
+Recall(Sensitivity) -Avg |         0.90          |     0.59          |       1         |
+Recall(Sensitivity) -High|         0.94	         |     0.60          |       1         |                         
+Precision - Low	         |         0.98          |     0.63          |       1         |
+Precision - Avg          |         0.89          |     0.65          |       1         |
+Precision - High         |         0.93	         |     0.58          |       1         |	                
+F1-score - Low 	         |         0.98          |     0.65          |       1         |
+F1-score - Avg 	         |         0.89          |     0.62          |       1         |
+F1-score - High 	 |         0.93          |     0.59          |       1         |                       
+Specificity - Low 	 |         0.99          |     0.76          |       1         |
+Specificity - Avg        |         0.95          |     0.87          |       1         |
+Specificity - High       |         0.97	         |     0.80          |       1         |	                
+Training time	         |         8.46s         |    0.21s	     |      1.24min    |
+Prediction time	         |         0.15s	 |    2.2s	     |      12.31s     |
+
+
+# Final Results
+
+The following 5 models were built and evaluated: • Decision Trees • KNN • Naïve Bayes • Random Forest • Multinomial Logistic Regression
+
+Summary performance measures for each model is as follows:
+
+Model	                 | Decision Tree	 |     KNN	     |     Naïve Bayes |        Random Forest | Multinomial Logistic Regression |
 -------------------------|-----------------------|-------------------|---------------- |
 Accuracy	         |         0.94	         |     0.62	     |       1         |                                                  
 Recall(Sensitivity) -Low |         0.97          |     0.67          |       1         |
