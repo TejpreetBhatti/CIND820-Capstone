@@ -1,0 +1,599 @@
+---
+title: "CIND 820 Final Code and Results"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+<center> <h1> Capstone (10%) </h1> </center>
+<center>  <h3> Tejpreet Bhatti </h2> </center>
+<center> <h3> DM0 & 500822071 </h2> </center>
+---
+
+```{r}
+# Loading packages
+
+#Packages for feature selection and decision tree
+#install.packages('rlang')
+#library(rlang)
+#library(Boruta)
+#library(rapportools)
+#library(tidyverse)
+#library(ggplot2)
+#library(RColorBrewer)
+#library(gridExtra)
+#library(corrplot)
+#library(corrgram)
+#library(arules)
+#library(arulesViz)
+#library(dplyr)
+#library(caret)
+#library(dplyr)
+#library(rpart)
+#library(rattle)
+#library(mlbench)
+
+#library(ggraph)
+#library(igraph)
+#require(tidyverse)
+#library(factoextra)
+#library(cluster)
+#library(purrr)
+
+#Knn packages
+#library(class)
+#library(e1071)
+#library(FNN) 
+#library(gmodels) 
+#library(psych)
+
+# Naive Bayes packages
+#library(naivebayes)
+#library(klaR)
+#library(MLmetrics)
+```
+
+```{r}
+
+# Reading CSV file
+mydata1<-read.csv("C:\\Users\\tejpr\\Downloads\\WA_Fn-UseC_-Marketing-Customer-Value-Analysis.csv")
+
+names(mydata1) <- gsub("_", "", names(mydata1))
+
+summary(mydata1)
+
+mydata1[mydata1 == ""] <- NA
+
+mydata1 <- mydata1[complete.cases(mydata1),]
+
+#Binning the clv into 3 classes
+mydata1$CLV_Levels <- cut(mydata1$Customer.Lifetime.Value, 
+                         breaks = c(0,5000,9000,Inf), 
+                         labels = c("Low_CLV","AVG_CLV","High_CLV"))
+
+str(mydata1)
+
+# Getting rid of unnecessary variables 
+mydata2 <- mydata1[,-3]
+mydata3 <- mydata2[,-1]
+mydata4 <- mydata3[,-5]
+
+# Converting categorical variables to factors variables 
+mydata4$State <- as.factor(mydata4$State)
+mydata4$Response <- as.factor(mydata4$Response)
+mydata4$Coverage <- as.factor(mydata4$Coverage)
+mydata4$Education <- as.factor(mydata4$Education)
+mydata4$EmploymentStatus <- as.factor(mydata4$EmploymentStatus)
+mydata4$Gender <- as.factor(mydata4$Gender)
+mydata4$Location.Code <- as.factor(mydata4$Location.Code)
+mydata4$Marital.Status <- as.factor(mydata4$Marital.Status)
+mydata4$Policy.Type <- as.factor(mydata4$Policy.Type)
+mydata4$Policy <- as.factor(mydata4$Policy)
+mydata4$Renew.Offer.Type <- as.factor(mydata4$Renew.Offer.Type)
+mydata4$Sales.Channel <- as.factor(mydata4$Sales.Channel)
+mydata4$Vehicle.Class <- as.factor(mydata4$Vehicle.Class)
+mydata4$Vehicle.Size <- as.factor(mydata4$Vehicle.Size)
+
+# Converting factor variables to numeric variables 
+mydata4$State <- as.numeric(mydata4$State)
+mydata4$Response <- as.numeric(mydata4$Response)
+mydata4$Coverage <- as.numeric(mydata4$Coverage)
+mydata4$Education <- as.numeric(mydata4$Education)
+mydata4$EmploymentStatus <- as.numeric(mydata4$EmploymentStatus)
+mydata4$Gender <- as.numeric(mydata4$Gender)
+mydata4$Location.Code <- as.numeric(mydata4$Location.Code)
+mydata4$Marital.Status <- as.numeric(mydata4$Marital.Status)
+mydata4$Policy.Type <- as.numeric(mydata4$Policy.Type)
+mydata4$Policy <- as.numeric(mydata4$Policy)
+mydata4$Renew.Offer.Type <- as.numeric(mydata4$Renew.Offer.Type)
+mydata4$Sales.Channel <- as.numeric(mydata4$Sales.Channel)
+mydata4$Vehicle.Class <- as.numeric(mydata4$Vehicle.Class)
+mydata4$Vehicle.Size <- as.numeric(mydata4$Vehicle.Size)
+
+str(mydata4)
+```
+```{r}
+library(dplyr)
+
+mydata4 %>% count(CLV_Levels)
+```
+
+```{r}
+#Boruta
+library(Boruta)
+
+
+#Training and setting seed. implementing and checking the performance of boruta package
+set.seed(123)
+boruta.train <- Boruta(mydata4,mydata4$CLV_Levels, doTrace = 2)
+print(boruta.train)
+
+#plotting the boruta variable importance chart.
+plot(boruta.train, xlab = "", xaxt = "n")
+lz<-lapply(1:ncol(boruta.train$ImpHistory),function(i)boruta.train$ImpHistory[is.finite(boruta.train$ImpHistory[,i]),i])
+names(lz) <- colnames(boruta.train$ImpHistory)
+Labels <- sort(sapply(lz,median))
+axis(side = 1,las=2,labels = names(Labels),at = 1:ncol(boruta.train$ImpHistory), cex.axis = 0.7)
+
+#list of confirmed attributes
+getSelectedAttributes(boruta.train, withTentative = F)
+
+#data frame of the final result derived from Boruta.
+boruta.df <- attStats(boruta.train)
+class(boruta.df)
+print(boruta.df)
+```
+
+```{r}
+#variable importance
+library(caret)
+library(rpart)
+
+# Train an rpart model and compute variable importance.
+set.seed(100)
+rPartMod <- train(CLV_Levels ~ ., data=mydata4, method="rpart")
+rpartImp <- varImp(rPartMod)
+print(rpartImp)
+
+#Plotting variable importance
+plot(rpartImp, top = 20, main='Variable Importance')
+
+```
+
+```{r}
+#Recursive feature elimination 
+library(caret)
+
+#This feature section method is fully functioning but it takes many hours to process on my #computer. So your welcome to get rid of the hastags and run it to confirm its functionality.
+
+# spliting the dataset into a training and testing set and split data into training (80%) and testing set (20%)
+
+parts = createDataPartition(mydata4$CLV_Levels, p = .8, list = F)
+train = mydata4[parts, ]
+test = mydata4[-parts, ]
+X_train = train[,-22]
+y_train = train[,22]
+
+#We will use rfe() function from CARET package to implement Recursive Feature elimination.
+
+# Specifying the Cross-validation technique
+control_rfe = rfeControl(functions = caretFuncs, # random forest
+                         method = "cv", # repeated cv
+                         number = 10) # number of folds
+
+#set.seed(50)
+# Performing RFE
+result_rfe = rfe(x = X_train, 
+                 y = y_train, 
+                 sizes = c(10),
+                 rfeControl = control_rfe)
+
+# summarising the results
+result_rfe
+```
+
+```{r}
+#Final dataset used for models
+
+library(caret)
+
+mydata5 <- mydata4[,c(1,3,4,5,6,7,8,9,10,14,15,16,18,19,20,21,22)]
+
+#data normalization for numeric variables
+
+preproc <- preProcess(mydata5[,c(6,9,10,14)], method=c("range"))
+ 
+mydata6 <- predict(preproc, mydata5[,c(6,9,10,14)])
+
+summary(mydata6)
+
+#preproc <- preProcess(mydata5[,c(1:15)], method=c("range"))
+#mydata6 <- predict(preproc, mydata5[,c(1:15)])
+ 
+mydata7 <- mydata5[,c(1,2,3,4,5,7,8,11,12,13,15,16)]
+
+# Target variable of CLV 
+CLV_Levels <- mydata5[,c(17)]
+
+# Combining the numeric and target variables in to one data frame
+finaldata <- cbind(mydata6, mydata7, CLV_Levels)
+
+finaldata$Income <- as.numeric(finaldata$Income)
+finaldata$Monthly.Premium.Auto <- as.numeric(finaldata$Monthly.Premium.Auto)
+finaldata$Number.of.Policies <- as.numeric(finaldata$Number.of.Policies)
+finaldata$Total.Claim.Amount <- as.numeric(finaldata$Total.Claim.Amount)
+
+str(finaldata)
+
+```
+
+```{r}
+#Decision Tree
+library(rattle)
+library(rpart)
+
+#runtime for decision tree training
+start.time.DT.train <- Sys.time()
+
+# Training the model and dataset spillting into train and test sets
+set.seed(123)
+sample8020 <- sample(nrow(finaldata), floor(0.8 * nrow(finaldata)))
+DTtrain8020 <- finaldata[sample8020,]
+DTtest8020 <- finaldata[-sample8020,]
+
+# Running the training algorithm
+ctrl <- trainControl(method = "cv", number = 10, classProbs = TRUE, savePredictions = TRUE)
+set.seed(123)
+DTmodel8020 <- train(CLV_Levels~., data = DTtrain8020 , method = "rpart",
+                     trControl = ctrl,
+                     tuneLength = 20)
+
+end.time.DT.train <- Sys.time()
+time.taken.DT.train <- round(end.time.DT.train - start.time.DT.train,2)
+time.taken.DT.train
+
+# Plot model accuracy vs different values of clv
+
+graph1<-plot(DTmodel8020, main = "DECISION TREE CLV MODEL", cex.main = 3, cex.lab = 2)
+
+# Print the confusion matrix for the model
+confusionMatrix(DTmodel8020)
+
+#runtime for decision tree prediction
+start.time.DT.pred <- Sys.time()
+
+# Model prediction on test
+set.seed(123)
+DTpredict8020 <- predict(DTmodel8020,DTtest8020)
+
+end.time.DT.pred <- Sys.time()
+time.taken.DT.pred <- round(end.time.DT.pred - start.time.DT.pred,2)
+time.taken.DT.pred
+
+# Confusion Matrix on results
+confusionMatrix(DTpredict8020,DTtest8020$CLV_Levels)
+
+# Train the model on the entire dataset for a final model.
+set.seed(1234)
+CLV_model <- rpart(CLV_Levels~.,data = finaldata, method = "class",parms=list(split="information"), cp = 0.00075)
+
+# Plot the model
+tree <-fancyRpartPlot(CLV_model, main = "Customer Lifetime Value Model", sub = "", cex = 0.5, compress=FALSE, ycompress=FALSE)
+```
+
+
+```{r}
+# Precision and F1 score for decision tree
+
+DTPrecision_Low <- (681/(681+12+0))
+DTPrecision_Low
+
+DTPrecision_Avg <- (620/(19+620+69))
+DTPrecision_Avg
+
+DTPrecision_High <- (373/(0+53+373))
+DTPrecision_High
+
+DTF1_Low <- (2*0.98*0.97)/(0.98+0.97)
+DTF1_Low
+
+DTF1_Avg <- (2*0.88*0.90)/(0.88+0.90)
+DTF1_Avg
+
+DTF1_High <- (2*0.88*0.84)/(0.88+0.84)
+DTF1_High
+```
+
+
+```{r}
+#KNN--using this version of KNN for analysis
+
+#library(caret)
+library(class)
+library(dplyr)
+library(e1071)
+library(FNN) 
+library(gmodels) 
+library(psych)
+
+# put outcome in its own object
+clv_outcome <- finaldata %>% select(CLV_Levels)
+
+# remove original variable from the data set
+data_class <- finaldata %>% select(-CLV_Levels)
+
+smp_size <- sample(1:nrow(data_class), 0.8 * nrow(data_class))
+
+# runtime calculation for KNN training
+start.time.KNN.train <- Sys.time()
+
+# Dataset splitting train and test sets (80:20)
+set.seed(1234)
+smp_size <- floor(0.8 * nrow(data_class))
+train_ind <- sample(seq_len(nrow(data_class)), size = smp_size)
+
+class_pred_train <- data_class[train_ind, ]
+class_pred_test <- data_class[-train_ind, ]
+
+clv_outcome_train <- clv_outcome[train_ind, ]
+clv_outcome_test <- clv_outcome[-train_ind, ]
+
+end.time.KNN.train <- Sys.time()
+time.taken.KNN.train <- round(end.time.KNN.train - start.time.KNN.train,2)
+time.taken.KNN.train
+
+# runtime calculation for KNN prediction
+start.time.KNN.pred <- Sys.time()
+
+# Running the training algorithm
+clv_KNN <- knn(class_pred_train,class_pred_test,cl=clv_outcome_train,k=7)
+
+end.time.KNN.pred <- Sys.time()
+time.taken.KNN.pred <- round(end.time.KNN.pred - start.time.KNN.pred,2)
+time.taken.KNN.pred
+
+# Confusion Matrix on results
+confusionMatrix(clv_KNN, clv_outcome_test)
+```
+
+```{r}
+#Caret KNN
+
+# Running the training algorithm
+clv_pred_caret <- train(class_pred_train, clv_outcome_train, method = "knn",trControl=trainControl(method='cv',number=10), preProcess = c("center","scale"))
+clv_pred_caret
+
+#Plotting amount of neighbours vs accuracy
+plot(clv_pred_caret)
+
+# Running the prediction algorithm
+knnPredict <- predict(clv_pred_caret, newdata = class_pred_test) 
+
+# Confusion Matrix on results
+confusionMatrix(knnPredict, clv_outcome_test)
+```
+
+
+```{r}
+# Precision and F1 score for KNN
+
+KNNPrecision_Low <- (364/(364+174+117))
+KNNPrecision_Low
+
+KNNPrecision_Avg <- (412/(239+412+147))
+KNNPrecision_Avg
+
+KNNPrecision_High <- (180/(87+107+180))
+KNNPrecision_High
+
+KNNF1_Low <- (2*0.56*0.53)/(0.56+0.53)
+KNNF1_Low
+
+KNNF1_Avg <- (2*0.52*0.59)/(0.52+0.59)
+KNNF1_Avg
+
+KNNF1_High <- (2*0.48*0.40)/(0.48+0.40)
+KNNF1_High
+```
+
+
+```{r}
+#Random Forest
+
+library(MLmetrics)
+library(e1071) 
+library(ranger) 
+library(dplyr)
+library(caret)
+
+#ranger(CLV_Levels ~ ., data = finaldata)
+
+#runtime for decision tree training
+start.time.RF.train <- Sys.time()
+
+# Training the model and dataset spillting into train and test sets
+set.seed(123)
+rfsample8020 <- sample(nrow(finaldata), floor(0.8 * nrow(finaldata)))
+rf.train <- finaldata[rfsample8020,]
+rf.test <- finaldata[-rfsample8020,]
+
+# Running the training algorithm
+rf.model <- ranger(
+        CLV_Levels ~ .,
+        data = rf.train,num.trees = 200, min.node.size = 1,max.depth = 10,
+        importance ="impurity",
+        save.memory = TRUE, 
+        probability = FALSE)
+
+end.time.RF.train <- Sys.time()
+time.taken.RF.train <- round(end.time.RF.train - start.time.RF.train,2)
+time.taken.RF.train
+
+# Print the confusion matrix for the model
+#confusionMatrix(rf.auto)
+
+#runtime for decision tree prediction
+start.time.RF.pred <- Sys.time()
+
+# Model prediction on test
+rf.pred <- predict(
+        rf.model,
+        data = rf.test,
+        verbose = TRUE)
+
+end.time.RF.pred <- Sys.time()
+time.taken.RF.pred <- round(end.time.RF.pred - start.time.RF.pred,2)
+time.taken.RF.pred
+
+# Confusion Matrix on results
+table(
+        rf.pred$predictions,
+        rf.test$CLV_Levels
+) %>% confusionMatrix()
+
+
+```
+
+
+```{r}
+# Precision and F1 score for Random forest
+
+rfPrecision_Low <- (678/(678+11+0))
+rfPrecision_Low
+
+rfPrecision_Avg <- (649/(22+649+71))
+rfPrecision_Avg
+
+rfPrecision_High <- (371/(0+25+371))
+rfPrecision_High
+
+rfF1_Low <- (2*0.98*0.96)/(0.98+0.96)
+rfF1_Low
+
+rfF1_Avg <- (2*0.87*0.95)/(0.87+0.95)
+rfF1_Avg
+
+rfF1_High <- (2*0.93*0.84)/(0.93+0.84)
+rfF1_High
+```
+
+
+```{r}
+#Naive Bayes
+
+#library(naivebayes)
+library(klaR)
+library(MLmetrics)
+
+mydata10 <- mydata3[,c(1,3,4,6,7,9,10,16,17,19,21,22,23)]
+nbdata <- cbind(mydata6, mydata10)
+
+y = nbdata$CLV_Levels
+
+# runtime calculation for Naive Bayes training
+start.time.NB.train <- Sys.time()
+
+# Dataset splitting train and test sets (80:20)
+set.seed(1234)
+NBsample8020 <- sample(nrow(nbdata), floor(0.8 * nrow(nbdata)))
+NBtrain8020 <- nbdata[NBsample8020,]
+NBtest8020 <- nbdata[-NBsample8020,]
+
+# Running the training algorithm
+NBmodel = train(nbdata,y,'nb',trControl=trainControl(method='cv',number=10))
+NBmodel
+
+end.time.NB.train <- Sys.time()
+time.taken.NB.train <- round(end.time.NB.train - start.time.NB.train,2)
+time.taken.NB.train
+
+# Print the confusion matrix for the model
+confusionMatrix(NBmodel)
+
+# runtime calculation for Naive Bayes prediction
+start.time.NB.pred <- Sys.time()
+
+# Model prediction on test
+set.seed(1234)
+NBpredict8020 <- predict(NBmodel,NBtest8020)
+
+end.time.NB.pred <- Sys.time()
+time.taken.NB.pred <- round(end.time.NB.pred - start.time.NB.pred,2)
+time.taken.NB.pred
+
+# Confusion Matrix on results
+confusionMatrix(NBpredict8020,NBtest8020$CLV_Levels)
+```
+
+
+
+```{r}
+# Multinomial logistic regression 
+
+library(nnet)
+
+# runtime calculation for Logistic regression training
+start.time.LR.train <- Sys.time()
+
+#Splitting the data
+set.seed(1234)
+LRsample8020 <- sample(nrow(finaldata), floor(0.8 * nrow(finaldata)))
+LRtrain8020 <- finaldata[LRsample8020,]
+LRtest8020 <- finaldata[-LRsample8020,]
+
+# Setting the reference
+LRtrain8020$CLV_Levels <- relevel(LRtrain8020$CLV_Levels, ref = "High_CLV")
+
+# Training the multinomial model
+multinom_model <- multinom(CLV_Levels ~ ., data = finaldata)
+
+end.time.LR.train <- Sys.time()
+time.taken.LR.train <- round(end.time.LR.train - start.time.LR.train,2)
+time.taken.LR.train
+
+exp(coef(multinom_model))
+
+# Predicting the values for train dataset
+trainPred <- predict(multinom_model, newdata = LRtrain8020, "class")
+
+# Building classification table
+confusionMatrix(trainPred, LRtrain8020$CLV_Levels)
+
+# runtime calculation for Naive Bayes prediction
+start.time.LR.pred <- Sys.time()
+
+# Predicting the class for test dataset
+testPred <- predict(multinom_model, newdata = LRtest8020, "class")
+
+end.time.LR.pred <- Sys.time()
+time.taken.LR.pred <- round(end.time.LR.pred - start.time.LR.pred,2)
+time.taken.LR.pred
+
+# Building classification table
+confusionMatrix(testPred, LRtest8020$CLV_Levels)
+
+
+```
+
+```{r}
+# Precision and F1 score for Logistic Regression
+
+LRPrecision_Low <- (575/(575+143+183))
+LRPrecision_Low
+
+LRPrecision_Avg <- (475/(67+475+72))
+LRPrecision_Avg
+
+LRPrecision_High <- (189/(48+75+189))
+LRPrecision_High
+
+LRF1_Low <- (2*0.64*0.83)/(0.64+0.83)
+LRF1_Low
+
+LRF1_Avg <- (2*0.77*0.69)/(0.77+0.69)
+LRF1_Avg
+
+LRF1_High <- (2*0.61*0.43)/(0.61+0.43)
+LRF1_High
+```
+
