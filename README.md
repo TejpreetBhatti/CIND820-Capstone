@@ -42,9 +42,9 @@ This repository contains the code required to evaluate the impact of Customer Li
 
 -Initial Results
 
--Results 
+-Final Results 
 
--Conclusion 
+-Study Conclusion 
 
 
 
