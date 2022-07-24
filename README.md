@@ -192,21 +192,21 @@ Summary performance measures for each model is as follows:
 
 Model	                 | Decision Tree	 |     KNN	     |     Naïve Bayes |        Random Forest | Multinomial Logistic Regression |
 -------------------------|-----------------------|-------------------|---------------- |
-Accuracy	         |         0.94	         |     0.62	     |       1         |                                                  
-Recall(Sensitivity) -Low |         0.97          |     0.67          |       1         |
-Recall(Sensitivity) -Avg |         0.90          |     0.59          |       1         |
-Recall(Sensitivity) -High|         0.94	         |     0.60          |       1         |                         
-Precision - Low	         |         0.98          |     0.63          |       1         |
-Precision - Avg          |         0.89          |     0.65          |       1         |
-Precision - High         |         0.93	         |     0.58          |       1         |	                
-F1-score - Low 	         |         0.98          |     0.65          |       1         |
-F1-score - Avg 	         |         0.89          |     0.62          |       1         |
-F1-score - High 	 |         0.93          |     0.59          |       1         |                       
-Specificity - Low 	 |         0.99          |     0.76          |       1         |
-Specificity - Avg        |         0.95          |     0.87          |       1         |
-Specificity - High       |         0.97	         |     0.80          |       1         |	                
-Training time	         |         8.46s         |    0.21s	     |      1.24min    |
-Prediction time	         |         0.15s	 |    2.2s	     |      12.31s     |
+Accuracy	         |         0.94	         |     0.62	     |       1         |      0.92      |    0.68     |                                            
+Recall(Sensitivity) -Low |         0.97          |     0.67          |       1         |    0.96    |   0.83   |
+Recall(Sensitivity) -Avg |         0.90          |     0.59          |       1         |    0.95    |   0.69   |
+Recall(Sensitivity) -High|         0.94	         |     0.60          |       1         |    0.84    |   0.43   |             
+Precision - Low	         |         0.98          |     0.63          |       1         |    0.98    |   0.64   |
+Precision - Avg          |         0.89          |     0.65          |       1         |    0.97    |   0.77   |
+Precision - High         |         0.93	         |     0.58          |       1         |	  0.93    |   0.60   |        
+F1-score - Low 	         |         0.98          |     0.65          |       1         |    0.97    |   0.72   |
+F1-score - Avg 	         |         0.89          |     0.62          |       1         |    0.90    |   0.73   |
+F1-score - High 	 |         0.93          |     0.59          |       1         |          0.88    |   0.50   |        
+Specificity - Low 	 |         0.99          |     0.76          |       1         |        0.99    |   0.71   |
+Specificity - Avg        |         0.95          |     0.87          |       1         |    0.92    |   0.88   |
+Specificity - High       |         0.97	         |     0.80          |       1         |	  0.98    |   0.91   |           
+Training time	         |         8.46s         |    0.21s	     |      1.24min    |  3.63s           |   2.86s  |
+Prediction time	         |         0.15s	 |    2.2s	     |      12.31s     |    0.26s             |   0.09s  |
 
 # Study Conclusions
 
